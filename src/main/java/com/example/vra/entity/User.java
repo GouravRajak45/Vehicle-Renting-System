@@ -18,7 +18,7 @@ public class User {
 	private String phoneNumber;
 	private String password;
 	private Role role;
-	private String profilePicture;
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -55,10 +55,5 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public String getProfilePicture() {
-		return profilePicture;
-	}
-	public void setProfilePicture(String profilePicture) {
-		this.profilePicture = profilePicture;
-	}
+	
 }
