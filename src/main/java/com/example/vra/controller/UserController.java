@@ -1,10 +1,15 @@
 package com.example.vra.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.vra.entity.User;
+import com.example.vra.responsestructure.ResponseStructure;
 import com.example.vra.service.UserService;
 
 @RestController
@@ -17,4 +22,10 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	@PostMapping("/save-user")
+	public ResponseEntity<ResponseStructure<User>> saveUser(@RequestBody User user) {
+		User user1 = userService.addUser(user);
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(ResponseStructure.create(HttpStatus.CREATED.value(), "User Ragisterd", user1));
+	}
 }
