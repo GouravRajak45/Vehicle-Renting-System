@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.vra.entity.Image;
 import com.example.vra.entity.User;
 import com.example.vra.exception.FailedToUploadException;
+import com.example.vra.exception.ProfilePictureNotFoundByIdException;
 import com.example.vra.exception.UserNotFoundbyIdException;
 import com.example.vra.repository.ImageRepository;
 import com.example.vra.repository.UserRepository;
@@ -55,6 +56,16 @@ public class UserService {
 			throw new FailedToUploadException("user failed to uploade image");
 		}
 		return image;
+	}
+
+	public Image fetchImageById(int imageId) {
+		Optional<Image> optional = imageRepository.findById(imageId);
+		if(optional.isPresent()) {
+			Image image = optional.get();
+			return image;
+		}else {
+			throw new ProfilePictureNotFoundByIdException("image not found");
+		}
 	}
 	
 }

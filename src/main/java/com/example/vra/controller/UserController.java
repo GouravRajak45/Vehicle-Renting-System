@@ -1,13 +1,16 @@
 package com.example.vra.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.vra.entity.Image;
 import com.example.vra.entity.User;
 import com.example.vra.responsestructure.ImageResponseStructure;
 import com.example.vra.responsestructure.ResponseStructure;
@@ -38,5 +41,11 @@ public class UserController {
 				.body(ImageResponseStructure.create(HttpStatus.CREATED.value(), "Image uploaded"));
 	}
 	
-	
+	@GetMapping("/fetch-Image")
+	public ResponseEntity<byte[]> fetchImageById(@RequestParam ("imageId")int imageId){
+		Image image = userService.fetchImageById(imageId);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.valueOf(image.getContentType()))
+				.body(image.getImageBytes());
+	}
 }
