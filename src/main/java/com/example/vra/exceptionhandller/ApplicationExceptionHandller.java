@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.vra.errorstructure.ErrorStructure;
+import com.example.vra.exception.ProfilePictureNotFoundByIdException;
 import com.example.vra.exception.UserNotFoundbyIdException;
 
 @RestControllerAdvice
@@ -15,5 +16,11 @@ public class ApplicationExceptionHandller {
 	public ResponseEntity<ErrorStructure> userNotFoundById(UserNotFoundbyIdException e){
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(ErrorStructure.create(HttpStatus.NOT_FOUND.value(), e.getMassage(), "user not found by id"));
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ErrorStructure> handleProfilePictureNotFound(ProfilePictureNotFoundByIdException e){
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorStructure.create(HttpStatus.NOT_FOUND.value(),
+				e.getMassage(), "Failed to Find the image"));
 	}
 }
