@@ -14,7 +14,7 @@ public class Image {
 	private int imageId;
 	private String contentType;
 	@Lob
-	private char[] imageBytes;
+	private byte[] imageBytes;
 	
 	public int getImageId() {
 		return imageId;
@@ -28,10 +28,10 @@ public class Image {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	public char[] getImageBytes() {
+	public byte[] getImageBytes() {
 		return imageBytes;
 	}
-	public void setImageBytes(char[] imageBytes) {
+	public void setImageBytes(byte[] imageBytes) {
 		this.imageBytes = imageBytes;
 	}
 	

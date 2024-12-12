@@ -1,14 +1,15 @@
 package com.example.vra.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vra.entity.User;
+import com.example.vra.responsestructure.ImageResponseStructure;
 import com.example.vra.responsestructure.ResponseStructure;
 import com.example.vra.service.UserService;
 
@@ -28,4 +29,14 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(ResponseStructure.create(HttpStatus.CREATED.value(), "User Ragisterd", user1));
 	}
+	
+	@PostMapping("/uploade-user-profile")
+	public ResponseEntity<ImageResponseStructure> uploadUserProfile(@RequestParam ("userId")int userId,@RequestParam ("file")MultipartFile file) {
+		userService.uploadProfile(userId,file);
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(ImageResponseStructure.create(HttpStatus.CREATED.value(), "Image uploaded"));
+	}
+	
+	
 }

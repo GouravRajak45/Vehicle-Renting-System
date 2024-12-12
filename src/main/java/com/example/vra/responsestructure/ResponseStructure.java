@@ -32,4 +32,5 @@ public class ResponseStructure<T> {
 		response.setData(data);
 		return response;
 	}
+	
 }
