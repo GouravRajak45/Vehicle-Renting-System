@@ -65,4 +65,5 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.FOUND)
 				.body(ResponseStructure.create(HttpStatus.FOUND.value(), "User Founded", response));
 	}
+	
 }
