@@ -39,5 +39,13 @@ public class UserMapper {
 		response.setRole(user.getRole());
 		return response;
 	}
+
+	public User mapWithUser(UserRequest userRequest, User user) {
+		user.setUserName(userRequest.getUserName());
+		user.setEmail(userRequest.getEmail());
+		user.setPassword(userRequest.getPassword());
+		user.setPhoneNumber(userRequest.getPhoneNumber());
+		return user;
+	}
 	
 }

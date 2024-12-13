@@ -5,13 +5,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vra.entity.Image;
-import com.example.vra.entity.User;
 import com.example.vra.enums.Role;
 import com.example.vra.requestdto.UserRequest;
 import com.example.vra.responsedto.UserResponse;
@@ -64,5 +64,12 @@ public class UserController {
 		UserResponse response = userService.fetchUserById(userId);
 		return ResponseEntity.status(HttpStatus.FOUND)
 				.body(ResponseStructure.create(HttpStatus.FOUND.value(), "User Founded", response));
+	}
+	
+	@PutMapping("/update-user")
+	public ResponseEntity<ResponseStructure<UserResponse>> updateUser(@RequestBody UserRequest request,@RequestParam int userId) {
+		UserResponse response = userService.updateUserById(request,userId);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(ResponseStructure.create(HttpStatus.OK.value(), "User updated", response));
 	}
 }

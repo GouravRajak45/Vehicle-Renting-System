@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.example.vra.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
-	@Query("Select u.profilePicture.imageId From User u where u.userId=:userId")
+	@Query("SELECT u.profilePicture.imageId FROM User u Where u.userId= :userId")
 	Integer getProfilePictureByUserId(int userId);
 }

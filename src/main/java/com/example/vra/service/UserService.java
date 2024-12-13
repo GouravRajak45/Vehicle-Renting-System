@@ -102,4 +102,18 @@ public class UserService {
 		return userMapper.mapToUserResponse(user2);
 	}
 	
+	public UserResponse updateUserById(UserRequest userRequest,int userId) {
+		Optional<User> optional = userRepository.findById(userId);
+		if(optional.isPresent()) {
+			User user = userMapper.mapWithUser(userRequest,optional.get());
+			userRepository.save(user);
+			
+			UserResponse response = userMapper.mapToUserResponse(user);
+			this.setProfilePictureURL(response, userId);
+			return response;
+		}else {
+			throw new UserNotFoundbyIdException("Failed to Find User");
+		}
+		
+	}
 }
