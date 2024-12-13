@@ -74,5 +74,26 @@ public class UserService {
 			throw new ProfilePictureNotFoundByIdException("image not found");
 		}
 	}
+
+	public UserResponse fetchUserById(int userId) {
+		
+		Optional<User> optional = userRepository.findById(userId);
+		if(optional.isPresent()) {
+			User user = optional.get();
+			
+			UserResponse response = userMapper.mapToUserResponse(user);
+			this.setProfilePictureURL(response, user.getUserId());
+			return response;
+		}else {
+			throw new UserNotFoundbyIdException("User not found");
+		}
+	}
+	
+	private void setProfilePictureURL(UserResponse response,int userId) {
+		int imageId = userRepository.getProfilePictureByUserId(userId);
+		if(imageId>0) {
+			response.setProfilePicture("/fetch-Image?imageId="+imageId);
+		}
+	}
 	
 }

@@ -50,4 +50,11 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.valueOf(image.getContentType()))
 				.body(image.getImageBytes());
 	}
+	
+	@GetMapping("/display-user-profile")
+	public ResponseEntity<ResponseStructure<UserResponse>> fetchUserByUserId(@RequestParam ("userId")int userId) {
+		UserResponse response = userService.fetchUserById(userId);
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.body(ResponseStructure.create(HttpStatus.FOUND.value(), "User Founded", response));
+	}
 }

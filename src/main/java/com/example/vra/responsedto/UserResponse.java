@@ -9,6 +9,8 @@ public class UserResponse {
 	private String email;
 	private String phoneNumber;
 	private Role role;
+	private String profilePicture;
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -38,6 +40,12 @@ public class UserResponse {
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 	
 	
