@@ -32,7 +32,8 @@ public class UserService {
 	}
 
 	public UserResponse addUser(UserRequest userRequest,Role role) {
-		User user = userMapper.mapToUser(userRequest,role);
+		User user = userMapper.mapToUser(userRequest,new User());
+		user.setRole(role);
 		User user2 = userRepository.save(user);
 		return userMapper.mapToUserResponse(user2);
 	}
@@ -94,12 +95,6 @@ public class UserService {
 		if(imageId>0) {
 			response.setProfilePicture("/fetch-Image?imageId="+imageId);
 		}
-	}
-
-	public UserResponse addRentingPartner(UserRequest userRequest, Role rentingPartner) {
-		User user = userMapper.mapToRentingPartner(userRequest, rentingPartner);
-		User user2 = userRepository.save(user);
-		return userMapper.mapToUserResponse(user2);
 	}
 	
 }

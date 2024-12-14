@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vra.entity.Image;
-import com.example.vra.entity.User;
 import com.example.vra.enums.Role;
 import com.example.vra.requestdto.UserRequest;
 import com.example.vra.responsedto.UserResponse;
@@ -38,7 +37,7 @@ public class UserController {
 	
 	@PostMapping("/save-rentingPartner")
 	public ResponseEntity<ResponseStructure<UserResponse>> saveRentingPartner(@RequestBody UserRequest userRequest){
-		UserResponse userResponse = userService.addRentingPartner(userRequest,Role.RENTING_PARTNER);
+		UserResponse userResponse = userService.addUser(userRequest,Role.RENTING_PARTNER);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(ResponseStructure.create(HttpStatus.CREATED.value(), "Renting Partner Ragisterd", userResponse));
 	}

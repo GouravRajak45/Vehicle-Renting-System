@@ -9,23 +9,11 @@ import com.example.vra.responsedto.UserResponse;
 @Component
 public class UserMapper {
 
-	public User mapToUser(UserRequest request,Role role) {
-		User user = new User();
+	public User mapToUser(UserRequest request,User user) {
 		user.setUserName(request.getUserName());
 		user.setEmail(request.getEmail());
 		user.setPassword(request.getPassword());
 		user.setPhoneNumber(request.getPhoneNumber());
-		user.setRole(role);
-		return user;
-	}
-	
-	public User mapToRentingPartner(UserRequest request,Role role) {
-		User user = new User();
-		user.setUserName(request.getUserName());
-		user.setEmail(request.getEmail());
-		user.setPassword(request.getPassword());
-		user.setPhoneNumber(request.getPhoneNumber());
-		user.setRole(role);
 		return user;
 	}
 	
