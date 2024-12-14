@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vra.entity.Image;
 import com.example.vra.entity.User;
+import com.example.vra.enums.Role;
 import com.example.vra.exception.FailedToUploadException;
 import com.example.vra.exception.ProfilePictureNotFoundByIdException;
 import com.example.vra.exception.UserNotFoundbyIdException;
@@ -30,9 +31,9 @@ public class UserService {
 		this.userMapper=userMapper;
 	}
 
-	public UserResponse addUser(UserRequest userRequest) {
-		// TODO Auto-generated method stub
-		User user = userMapper.mapToUser(userRequest);
+	public UserResponse addUser(UserRequest userRequest,Role role) {
+		User user = userMapper.mapToUser(userRequest,new User());
+		user.setRole(role);
 		User user2 = userRepository.save(user);
 		return userMapper.mapToUserResponse(user2);
 	}
@@ -72,6 +73,27 @@ public class UserService {
 			return image;
 		}else {
 			throw new ProfilePictureNotFoundByIdException("image not found");
+		}
+	}
+
+	public UserResponse fetchUserById(int userId) {
+		
+		Optional<User> optional = userRepository.findById(userId);
+		if(optional.isPresent()) {
+			User user = optional.get();
+			
+			UserResponse response = userMapper.mapToUserResponse(user);
+			this.setProfilePictureURL(response, user.getUserId());
+			return response;
+		}else {
+			throw new UserNotFoundbyIdException("User not found");
+		}
+	}
+	
+	private void setProfilePictureURL(UserResponse response,int userId) {
+		int imageId = userRepository.getProfilePictureByUserId(userId);
+		if(imageId>0) {
+			response.setProfilePicture("/fetch-Image?imageId="+imageId);
 		}
 	}
 	

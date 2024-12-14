@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vra.entity.Image;
-import com.example.vra.entity.User;
+import com.example.vra.enums.Role;
 import com.example.vra.requestdto.UserRequest;
 import com.example.vra.responsedto.UserResponse;
 import com.example.vra.responsestructure.ImageResponseStructure;
@@ -28,11 +28,18 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@PostMapping("/save-user")
-	public ResponseEntity<ResponseStructure<UserResponse>> saveUser(@RequestBody UserRequest userRequest) {
-		UserResponse userResponse = userService.addUser(userRequest);
+	@PostMapping("/save-costomer")
+	public ResponseEntity<ResponseStructure<UserResponse>> saveCostomer(@RequestBody UserRequest userRequest) {
+		UserResponse userResponse = userService.addUser(userRequest,Role.COSTOMER);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(ResponseStructure.create(HttpStatus.CREATED.value(), "User Ragisterd", userResponse));
+	}
+	
+	@PostMapping("/save-rentingPartner")
+	public ResponseEntity<ResponseStructure<UserResponse>> saveRentingPartner(@RequestBody UserRequest userRequest){
+		UserResponse userResponse = userService.addUser(userRequest,Role.RENTING_PARTNER);
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(ResponseStructure.create(HttpStatus.CREATED.value(), "Renting Partner Ragisterd", userResponse));
 	}
 	
 	@PostMapping("/uploade-user-profile")
@@ -50,4 +57,12 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.valueOf(image.getContentType()))
 				.body(image.getImageBytes());
 	}
+	
+	@GetMapping("/display-user-profile")
+	public ResponseEntity<ResponseStructure<UserResponse>> fetchUserByUserId(@RequestParam ("userId")int userId) {
+		UserResponse response = userService.fetchUserById(userId);
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.body(ResponseStructure.create(HttpStatus.FOUND.value(), "User Founded", response));
+	}
+	
 }
