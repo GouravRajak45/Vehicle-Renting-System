@@ -38,7 +38,7 @@ public class UserController {
 	
 	@PostMapping("/save-rentingPartner")
 	public ResponseEntity<ResponseStructure<UserResponse>> saveRentingPartner(@RequestBody UserRequest userRequest){
-		UserResponse userResponse = userService.addRentingPartner(userRequest,Role.RENTING_PARTNER);
+		UserResponse userResponse = userService.addUser(userRequest,Role.RENTING_PARTNER);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(ResponseStructure.create(HttpStatus.CREATED.value(), "Renting Partner Ragisterd", userResponse));
 	}

@@ -32,7 +32,7 @@ public class UserService {
 	}
 
 	public UserResponse addUser(UserRequest userRequest,Role role) {
-		User user = userMapper.mapToUser(userRequest,role);
+		User user = userMapper.mapToUser(userRequest,new User());
 		User user2 = userRepository.save(user);
 		return userMapper.mapToUserResponse(user2);
 	}
@@ -108,7 +108,8 @@ public class UserService {
 	}
 
 	public UserResponse addRentingPartner(UserRequest userRequest, Role rentingPartner) {
-		User user = userMapper.mapToRentingPartner(userRequest, rentingPartner);
+		User user = userMapper.mapToUser(userRequest, new User());
+		user.setRole(rentingPartner);
 		User user2 = userRepository.save(user);
 		return userMapper.mapToUserResponse(user2);
 	}
@@ -116,7 +117,7 @@ public class UserService {
 	public UserResponse updateUserById(UserRequest userRequest,int userId) {
 		Optional<User> optional = userRepository.findById(userId);
 		if(optional.isPresent()) {
-			User user = userMapper.mapWithUser(userRequest,optional.get());
+			User user = userMapper.mapToUser(userRequest,optional.get());
 			userRepository.save(user);
 			
 			UserResponse response = userMapper.mapToUserResponse(user);
