@@ -72,4 +72,5 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(ResponseStructure.create(HttpStatus.OK.value(), "User updated", response));
 	}
+	
 }

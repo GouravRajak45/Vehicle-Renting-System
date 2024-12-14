@@ -41,16 +41,27 @@ public class UserService {
 		// TODO Auto-generated method stub
 		Optional<User> optional = userRepository.findById(userId);
 		if(optional.isPresent()) {
-			Image image = imageRepository.save(this.getImage(file));
-			
 			User user = optional.get();
-			user.setProfilePicture(image);
-			userRepository.save(user);
+			
+			if(user.getProfilePicture()!=null) {
+				Image image = user.getProfilePicture();
+				this.uploadUserProfile(file,user);
+				imageRepository.delete(image);
+			}
+			this.uploadUserProfile(file,user);
 		}else {
 			throw new UserNotFoundbyIdException("user not for the given Id");
 		}
 	}
 	
+	private void uploadUserProfile(MultipartFile file, User user) {
+		Image image = imageRepository.save(this.getImage(file));
+
+		user.setProfilePicture(image);
+		userRepository.save(user);
+		
+	}
+
 	private Image getImage(MultipartFile file) {
 		Image image = new Image();
 		try {
@@ -116,4 +127,6 @@ public class UserService {
 		}
 		
 	}
+	
+	
 }
