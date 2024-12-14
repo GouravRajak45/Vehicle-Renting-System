@@ -3,7 +3,6 @@ package com.example.vra.mapper;
 import org.springframework.stereotype.Component;
 
 import com.example.vra.entity.User;
-import com.example.vra.enums.Role;
 import com.example.vra.requestdto.UserRequest;
 import com.example.vra.responsedto.UserResponse;
 @Component
