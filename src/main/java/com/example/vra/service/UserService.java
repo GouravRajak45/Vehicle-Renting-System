@@ -2,6 +2,7 @@ package com.example.vra.service;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,16 +24,20 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final ImageRepository imageRepository;
 	private final UserMapper userMapper;
-
-	public UserService(UserRepository userRepository,ImageRepository imageRepository,UserMapper userMapper) {
+	private final PasswordEncoder passwordEncoder;
+	
+	public UserService(UserRepository userRepository,ImageRepository imageRepository,UserMapper userMapper,PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.imageRepository=imageRepository;
 		this.userMapper=userMapper;
+		this.passwordEncoder=passwordEncoder;
 	}
 
 	public UserResponse addUser(UserRequest userRequest,Role role) {
 		User user = userMapper.mapToUser(userRequest,role);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setRole(role);
 		User user2 = userRepository.save(user);
 		return userMapper.mapToUserResponse(user2);
 	}

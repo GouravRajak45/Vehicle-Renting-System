@@ -9,4 +9,6 @@ import com.example.vra.entity.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("SELECT u.profilePicture.imageId FROM User u Where u.userId= :userId")
 	Integer getProfilePictureByUserId(int userId);
+	
+	User findByEmail(String userName);
 }
