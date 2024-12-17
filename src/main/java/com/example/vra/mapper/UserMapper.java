@@ -3,7 +3,6 @@ package com.example.vra.mapper;
 import org.springframework.stereotype.Component;
 
 import com.example.vra.entity.User;
-import com.example.vra.enums.Role;
 import com.example.vra.requestdto.UserRequest;
 import com.example.vra.responsedto.UserResponse;
 @Component
@@ -12,8 +11,8 @@ public class UserMapper {
 	public User mapToUser(UserRequest request,User user) {
 		user.setUserName(request.getUserName());
 		user.setEmail(request.getEmail());
-		user.setPassword(request.getPassword());
 		user.setPhoneNumber(request.getPhoneNumber());
+		user.setPassword(request.getPassword());
 		return user;
 	}
 	

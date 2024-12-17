@@ -42,16 +42,27 @@ public class UserService {
 		// TODO Auto-generated method stub
 		Optional<User> optional = userRepository.findById(userId);
 		if(optional.isPresent()) {
-			Image image = imageRepository.save(this.getImage(file));
-			
 			User user = optional.get();
-			user.setProfilePicture(image);
-			userRepository.save(user);
+			
+			if(user.getProfilePicture()!=null) {
+				Image image = user.getProfilePicture();
+				this.uploadUserProfile(file,user);
+				imageRepository.delete(image);
+			}
+			this.uploadUserProfile(file,user);
 		}else {
 			throw new UserNotFoundbyIdException("user not for the given Id");
 		}
 	}
 	
+	private void uploadUserProfile(MultipartFile file, User user) {
+		Image image = imageRepository.save(this.getImage(file));
+
+		user.setProfilePicture(image);
+		userRepository.save(user);
+		
+	}
+
 	private Image getImage(MultipartFile file) {
 		Image image = new Image();
 		try {
@@ -96,5 +107,28 @@ public class UserService {
 			response.setProfilePicture("/fetch-Image?imageId="+imageId);
 		}
 	}
+
+	public UserResponse addRentingPartner(UserRequest userRequest, Role rentingPartner) {
+		User user = userMapper.mapToUser(userRequest, new User());
+		user.setRole(rentingPartner);
+		User user2 = userRepository.save(user);
+		return userMapper.mapToUserResponse(user2);
+	}
+	
+	public UserResponse updateUserById(UserRequest userRequest,int userId) {
+		Optional<User> optional = userRepository.findById(userId);
+		if(optional.isPresent()) {
+			User user = userMapper.mapToUser(userRequest,optional.get());
+			userRepository.save(user);
+			
+			UserResponse response = userMapper.mapToUserResponse(user);
+			this.setProfilePictureURL(response, userId);
+			return response;
+		}else {
+			throw new UserNotFoundbyIdException("Failed to Find User");
+		}
+		
+	}
+	
 	
 }
