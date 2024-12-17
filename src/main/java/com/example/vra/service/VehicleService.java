@@ -1,5 +1,6 @@
 package com.example.vra.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class VehicleService {
 		}else {
 			throw new VehicleNotFoundByIdException("Vehicle not found");
 		}
+	}
+
+	public List<Vehicle> findAll() {
+		return vehicleRepository.findAll();
 	}
 	
 	
