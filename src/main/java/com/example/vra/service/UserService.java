@@ -33,6 +33,7 @@ public class UserService {
 
 	public UserResponse addUser(UserRequest userRequest,Role role) {
 		User user = userMapper.mapToUser(userRequest,new User());
+		user.setRole(role);
 		User user2 = userRepository.save(user);
 		return userMapper.mapToUserResponse(user2);
 	}
