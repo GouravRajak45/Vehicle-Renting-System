@@ -122,6 +122,7 @@ public class UserService {
 		Optional<User> optional = userRepository.findById(userId);
 		if(optional.isPresent()) {
 			User user = userMapper.mapWithUser(userRequest,optional.get());
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			userRepository.save(user);
 			
 			UserResponse response = userMapper.mapToUserResponse(user);

@@ -1,6 +1,5 @@
 package com.example.vra.security;
 
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -24,7 +23,7 @@ public class SecurityConfig {
 		return http
 		.csrf(csrf->csrf.disable())//csrf -> cross site request forgery
 		.authorizeHttpRequests(authorized->authorized
-												.requestMatchers("/save-costomer","/save-rentingPartner","/display-all","/save-vehicle")
+												.requestMatchers("/save-costomer","/display-all","/save-vehicle","/display-user-profile","/update-user")
 												.permitAll()
 												.anyRequest()
 												.authenticated())
